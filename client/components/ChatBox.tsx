@@ -152,6 +152,9 @@ export default React.memo(function ChatBox({ socket, messages }: ChatBoxProp) {
     }
   };
 
+  // Temp. disabled chat
+  return null;
+
   return (
     <ChatBoxContainer
       className={isExpand ? "" : "shrink"}
