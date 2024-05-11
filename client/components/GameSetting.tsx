@@ -488,17 +488,29 @@ const GameSetting: React.FC<GameSettingProps> = (props) => {
                   label={t('leap-frog')}
                 />
 
-              <FormControlLabel
-                control={
-                  <Switch
-                    checked={room.bonusCityState}
-                    // @ts-ignore
-                    onChange={handleSettingChange('bonusCityState')}
-                    disabled={disabled_ui}
-                  />
-                }
-                label={t('bonus-city-state')}
-              />
+                <FormControlLabel
+                  control={
+                    <Switch
+                      checked={room.bonusCityState}
+                      // @ts-ignore
+                      onChange={handleSettingChange('bonusCityState')}
+                      disabled={disabled_ui}
+                    />
+                  }
+                  label={t('bonus-city-state')}
+                />
+
+                <FormControlLabel
+                  control={
+                    <Switch
+                      checked={room.enableTraps}
+                      // @ts-ignore
+                      onChange={handleSettingChange('enableTraps')}
+                      disabled={disabled_ui}
+                    />
+                  }
+                  label={t('enable-traps')}
+                />
               </FormGroup>
             </Box>
           </TabPanel>

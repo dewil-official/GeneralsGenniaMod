@@ -82,7 +82,8 @@ export class Room {
     public revealKing: boolean = false, // reveal all king
     public warringStatesMode: boolean = false, // warring states 战国 mode
     public leapFrog: boolean = false, // warring states 战国 mode
-    public bonusCityState: boolean = false // Bonus City State
+    public bonusCityState: boolean = false, // Bonus City State
+    public enableTraps: boolean = false, // Enables traps
   ) { }
 
   static create(options: Partial<Room>): Room {
@@ -113,7 +114,8 @@ export class Room {
       options.revealKing,
       options.warringStatesMode,
       options.leapFrog,
-      options.bonusCityState
+      options.bonusCityState,
+      options.enableTraps
     );
   }
 

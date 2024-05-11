@@ -1,6 +1,6 @@
 import React, { useMemo, useState, useCallback } from 'react';
 import Image from 'next/image';
-import { TileType, TileProp, TileType2Image } from '@/lib/types';
+import { TileType, TileProp, TileType2Image, Player } from '@/lib/types';
 import {
   ColorArr,
   WarringStates,
@@ -28,6 +28,7 @@ interface MapTileProps {
   isSelected: boolean;
   isNextPossibleMove: boolean;
   warringStatesMode: boolean;
+  ownTrapCount?: number;
 }
 
 export default React.memo(function MapTile(props: MapTileProps) {
@@ -45,6 +46,7 @@ export default React.memo(function MapTile(props: MapTileProps) {
     isSelected,
     isNextPossibleMove,
     warringStatesMode = false,
+    ownTrapCount,
   } = props;
   console.log(`${x} ${y} render`, new Date().toISOString());
   const [cursorStyle, setCursorStyle] = useState('default');
@@ -208,6 +210,26 @@ export default React.memo(function MapTile(props: MapTileProps) {
           {/* {tileHalf ? '50%' : unitsCount} */}
 
           {tileHalf ? '50%' : unitsCount}
+        </div>
+      )}
+
+      {ownTrapCount && ownTrapCount > 0 && (
+        <div style={{
+          position: 'absolute',
+          left: 0,
+          top: 0,
+          width: zoomedSize,
+          height: zoomedSize,
+          display: 'flex',
+          justifyContent: 'end',
+          alignItems: 'end',
+          fontSize: Math.ceil(zoomedFontSize / 2),
+          color: '#fff',
+          textOverflow: 'ellipsis',
+          overflow: 'visible',
+          textShadow: '0 0 1px #000',
+        }}>
+          {ownTrapCount}
         </div>
       )}
 

@@ -1,6 +1,6 @@
 import { useGame, useGameDispatch } from '@/context/GameContext';
 import useMap from '@/hooks/useMap';
-import { Position, SelectedMapTileInfo, TileProp, TileType } from '@/lib/types';
+import { Player, Point, Position, SelectedMapTileInfo, TileProp, TileType } from '@/lib/types';
 import usePossibleNextMapPositions from '@/lib/use-possible-next-map-positions';
 import { getPlayerIndex } from '@/lib/utils';
 import { ZoomInMap, ZoomOutMap } from '@mui/icons-material';
@@ -47,6 +47,11 @@ function GameMap() {
 
   const toggleDirections = () => {
     setShowDirections(!showDirections);
+  };
+
+  const placeDownTrap = () => {
+    // TODO
+
   };
 
   const { setSelectedMapTileInfo, halfArmy, clearQueue, popQueue, selectGeneral,
@@ -135,9 +140,12 @@ function GameMap() {
           event.preventDefault();
           attackDown(selectedMapTileInfo);
           break;
+        case 't':
+          event.preventDefault();
+          placeDownTrap();
       }
     },
-    [attackDown, attackLeft, attackRight, attackUp, centerGeneral, clearQueue, halfArmy, handleZoomOption, popQueue, selectGeneral, selectedMapTileInfo, setPosition]
+    [attackDown, attackLeft, attackRight, attackUp, centerGeneral, clearQueue, halfArmy, handleZoomOption, popQueue, selectGeneral, selectedMapTileInfo, setPosition, placeDownTrap]
   );
 
   const myPlayerIndex = useMemo(() => {
@@ -348,6 +356,15 @@ function GameMap() {
     return () => { };
   }, [mapRef, handleTouchStart, handleTouchMove, handleTouchEnd]);
 
+  const getOwnTrapCountForTile = (x: number, y: number) => {
+    const player = room.players[myPlayerIndex];
+
+    const traps = room.map?.getBlock(new Point(x, y)).traps;
+    if (traps?.player?.id !== player?.id) return 0;
+
+    return traps.unitCount ?? 0;
+  }
+  
   return (
     <div>
       <div
@@ -383,6 +400,7 @@ function GameMap() {
                   y={y}
                   {...tile}
                   warringStatesMode={room.warringStatesMode} />
+                  ownTrapCount={getOwnTrapCountForTile(x, y)}
               </div>
             );
           });

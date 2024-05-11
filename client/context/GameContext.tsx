@@ -405,7 +405,7 @@ const GameProvider: React.FC<GameProviderProp> = ({ children }) => {
           halfArmy,
           clearQueue,
           popQueue,
-          selectGeneral
+          selectGeneral,
         }}
       >
         {children}

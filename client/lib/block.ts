@@ -1,6 +1,6 @@
 // import Player from "@/lib/Player";
 // 循环引用..
-import { TileType, TileProp, Point } from './types';
+import { TileType, TileProp, Point, Player } from './types';
 
 class Block extends Point {
   constructor(
@@ -11,7 +11,8 @@ class Block extends Point {
     public player: any = null,
     public isAlwaysRevealed: boolean = false,
     public priority: number = 0,
-    public unitsCountRevealed: boolean = true
+    public unitsCountRevealed: boolean = true,
+    public traps: { player: Player, unitCount: number } | undefined
   ) {
     super(x, y);
   }

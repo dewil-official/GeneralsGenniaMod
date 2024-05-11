@@ -11,7 +11,8 @@ class Block extends Point {
     public player: any = null,
     public isAlwaysRevealed: boolean = false,
     public priority: number = 0,
-    public unitsCountRevealed: boolean = true
+    public unitsCountRevealed: boolean = true,
+    public traps: { player: Player, unitCount: number } | undefined,
   ) {
     super(x, y);
   }
