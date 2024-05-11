@@ -28,6 +28,10 @@ class Block extends Point {
     this.type = TileType.City;
   }
 
+  removeKingFromPosition(): void {
+    this.type = TileType.City;
+  }
+
   setKingPosition(player: Player): void {
     this.type = TileType.King;
     this.player = player;

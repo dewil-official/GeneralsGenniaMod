@@ -63,7 +63,7 @@ class GameMap {
     );
     this.turn = 0;
     this.revealKing = revealKing;
-    this.minKingDistance = 6; // todo: change this according to the Manhattan distance
+    this.minKingDistance = 10; // todo: change this according to the Manhattan distance
   }
 
   toJSON() {
@@ -241,8 +241,7 @@ class GameMap {
   }
 
   tryPlaceCity(x: number, y: number): boolean {
-    if (this.map[x][y] === undefined) return false;
-    if (!this.isPlain(this.map[x][y])) return false;
+    if (!this.withinMap(new Point(x, y))) return false;
 
     this.map[x][y].setType(TileType.City);
     this.map[x][y].setUnit(-1);
@@ -258,16 +257,6 @@ class GameMap {
     }
     // Generate the king
     this.assign_random_king();
-
-    // (For City-State Bonus, add a City near the Kings)
-    if (addBonusCity) {
-      for (let i = 0, x, y; i < this.players.length; ++i) {
-        x = this.players[i].king.x;
-        y = this.players[i].king.y;
-        
-        this.tryPlaceCity(x+1,y) || this.tryPlaceCity(x-1, y) || this.tryPlaceCity(x, y +1) || this.tryPlaceCity(x, y -1)
-      }
-    }
 
     // console.log('Kings generated successfully');
     // Generate the mountain
@@ -293,6 +282,7 @@ class GameMap {
         break;
       }
     }
+
     // console.log('Mountains generated successfully');
     // Generate the city
     for (let i = 1; i <= this.city; ++i) {
@@ -328,7 +318,16 @@ class GameMap {
       }
       this.map[x][y].type = TileType.Swamp;
     }
-    // console.log('Swamps generated successfully');
+
+    // (For City-State Bonus, add a City near the Kings)
+    if (addBonusCity) {
+      for (let i = 0, x, y; i < this.players.length; ++i) {
+        x = this.players[i].king.x;
+        y = this.players[i].king.y;
+        
+        this.tryPlaceCity(x+1,y) || this.tryPlaceCity(x-1, y) || this.tryPlaceCity(x, y +1) || this.tryPlaceCity(x, y -1)
+      }
+    }
   }
 
   getTotal(player: any): { army: number; land: number } {

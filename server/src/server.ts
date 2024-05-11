@@ -422,8 +422,12 @@ async function handleGame(room: Room, io: Server) {
                   room.players[blockPlayerIndex].winLand(block);
                 });
                 if (room.leapFrog) {
+                  // Invalidate old position
+                  room.map.getBlock(room.players[blockPlayerIndex].king).removeKingFromPosition();
+
+                  // Activate new position
                   room.map.getBlock(player.king).setKingPosition(room.players[blockPlayerIndex]);
-                  room.map.getBlock(room.players[blockPlayerIndex].king).kingBeDominated();
+                  room.players[blockPlayerIndex].king = room.map.getBlock(room.players[blockPlayerIndex].king);
                 } else {
                   room.map.getBlock(player.king).kingBeDominated();
                 }

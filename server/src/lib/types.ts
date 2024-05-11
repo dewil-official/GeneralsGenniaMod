@@ -81,8 +81,8 @@ export class Room {
     public keepAlive: boolean = false, // keep alive after game over
     public revealKing: boolean = false, // reveal all king
     public warringStatesMode: boolean = false, // warring states 战国 mode
-    public leapFrog: boolean = false, // Jump to killed players' king position
-    public bonusCityState: boolean = false, // Get a free city state at the start of the game
+    public leapFrog: boolean = true, // Jump to killed players' king position
+    public bonusCityState: boolean = true, // Get a free city state at the start of the game
   ) { }
 
   static create(options: Partial<Room>): Room {

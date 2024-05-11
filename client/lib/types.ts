@@ -81,8 +81,8 @@ export class Room {
     public keepAlive: boolean = false, // keep alive after game over
     public revealKing: boolean = false, // reveal all king
     public warringStatesMode: boolean = false, // warring states 战国 mode
-    public leapFrog: boolean = false, // warring states 战国 mode
-    public bonusCityState: boolean = false // Bonus City State
+    public leapFrog: boolean = true, // warring states 战国 mode
+    public bonusCityState: boolean = true // Bonus City State
   ) { }
 
   static create(options: Partial<Room>): Room {
