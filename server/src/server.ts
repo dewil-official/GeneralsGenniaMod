@@ -369,7 +369,7 @@ async function handleGame(room: Room, io: Server) {
         room.players,
         room.revealKing
       );
-      room.map.generate();
+      room.map.generate(room.bonusCityState);
 
       console.log(`Start game with random map `);
     }

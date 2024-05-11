@@ -240,7 +240,16 @@ class GameMap {
     return map;
   }
 
-  generate(): void {
+  tryPlaceCity(x: number, y: number): boolean {
+    if (this.map[x][y] === undefined) return false;
+    if (!this.isPlain(this.map[x][y])) return false;
+
+    this.map[x][y].setType(TileType.City);
+    this.map[x][y].setUnit(-1);
+    return true;
+  }
+
+  generate(addBonusCity?: boolean): void {
     console.log('Width:', this.width, 'Height:', this.height);
     for (let i = 0; i < this.width; i++) {
       for (let j = 0; j < this.height; j++) {
@@ -249,6 +258,16 @@ class GameMap {
     }
     // Generate the king
     this.assign_random_king();
+
+    // (For City-State Bonus, add a City near the Kings)
+    if (addBonusCity) {
+      for (let i = 0, x, y; i < this.players.length; ++i) {
+        x = this.players[i].king.x;
+        y = this.players[i].king.y;
+        
+        this.tryPlaceCity(x+1,y) || this.tryPlaceCity(x-1, y) || this.tryPlaceCity(x, y +1) || this.tryPlaceCity(x, y -1)
+      }
+    }
 
     // console.log('Kings generated successfully');
     // Generate the mountain

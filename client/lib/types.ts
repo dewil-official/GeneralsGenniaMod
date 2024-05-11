@@ -81,7 +81,8 @@ export class Room {
     public keepAlive: boolean = false, // keep alive after game over
     public revealKing: boolean = false, // reveal all king
     public warringStatesMode: boolean = false, // warring states 战国 mode
-    public leapFrog: boolean = false // warring states 战国 mode
+    public leapFrog: boolean = false, // warring states 战国 mode
+    public bonusCityState: boolean = false // Bonus City State
   ) { }
 
   static create(options: Partial<Room>): Room {
@@ -111,7 +112,8 @@ export class Room {
       options.keepAlive,
       options.revealKing,
       options.warringStatesMode,
-      options.leapFrog
+      options.leapFrog,
+      options.bonusCityState
     );
   }
 
