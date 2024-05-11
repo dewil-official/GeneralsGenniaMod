@@ -38,15 +38,6 @@ roomPool['1'] = Room.create({
   keepAlive: true,
 });
 
-// Warring state
-roomPool['warring_state'] = Room.create({
-  id: 'warring_state',
-  roomName: '战国模式 Warring State',
-  warringStatesMode: true,
-  revealKing: true,
-  keepAlive: true,
-});
-
 // mobile
 // roomPool['mobile'] = Room.create({
 //   id: 'mobile',

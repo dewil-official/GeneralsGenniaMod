@@ -407,6 +407,7 @@ async function handleGame(room: Room, io: Server) {
             let blockPlayerIndex = getPlayerIndex(room, block.player?.id);
             if (blockPlayerIndex !== -1) {
               if (block.player !== player && player.isDead === false) {
+                // King has been captured
                 console.log(block.player.username, 'captured', player.username);
                 io.in(room.id).emit('captured', block.player.minify(), player.minify());
                 let player_socket = io.sockets.sockets.get(player.socket_id);
@@ -420,7 +421,12 @@ async function handleGame(room: Room, io: Server) {
                   room.map.transferBlock(block, room.players[blockPlayerIndex]);
                   room.players[blockPlayerIndex].winLand(block);
                 });
-                room.map.getBlock(player.king).kingBeDominated();
+                if (room.leapFrog) {
+                  room.map.getBlock(player.king).setKingPosition(room.players[blockPlayerIndex]);
+                  room.map.getBlock(room.players[blockPlayerIndex].king).kingBeDominated();
+                } else {
+                  room.map.getBlock(player.king).kingBeDominated();
+                }
                 player.land.length = 0;
               } else if (player.operatedTurn === 0 && player.operatedTurn + 160 <= room.map.turn) {
                 // if player is not operated for 160/2 turns, it will be neutralized
@@ -751,6 +757,7 @@ io.on('connection', async (socket) => {
             case 'fogOfWar':
             case 'revealKing':
             case 'warringStatesMode':
+            case 'leapFrog':
             case 'deathSpectator':
               if (typeof value !== 'boolean') {
                 socket.emit('error', 'Modification was failed', 'Invalid value.');

@@ -479,13 +479,13 @@ const GameSetting: React.FC<GameSettingProps> = (props) => {
                 <FormControlLabel
                   control={
                     <Switch
-                      checked={room.warringStatesMode}
+                      checked={room.leapFrog}
                       // @ts-ignore
-                      onChange={handleSettingChange('warringStatesMode')}
+                      onChange={handleSettingChange('leapFrog')}
                       disabled={disabled_ui}
                     />
                   }
-                  label={t('warring-states-mode')}
+                  label={t('leap-frog')}
                 />
               </FormGroup>
             </Box>

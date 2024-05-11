@@ -1,6 +1,6 @@
 // import Player from "@/lib/Player";
 // 循环引用..
-import { TileType, TileProp, Point } from './types';
+import { TileType, TileProp, Point, Player } from './types';
 
 class Block extends Point {
   constructor(
@@ -26,6 +26,11 @@ class Block extends Point {
 
   kingBeDominated(): void {
     this.type = TileType.City;
+  }
+
+  setKingPosition(player: Player): void {
+    this.type = TileType.King;
+    this.player = player;
   }
 
   beDominated(player: any, unit: number): void {
